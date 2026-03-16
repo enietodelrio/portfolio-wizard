@@ -46,6 +46,21 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
 .sc-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px 16px;margin-bottom:10px}
 .tab-content{display:none;padding:20px}.tab-content.active{display:block}
 @supports(padding-bottom:env(safe-area-inset-bottom)){.tab-bar{padding-bottom:env(safe-area-inset-bottom)}}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:#131820;border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;max-height:82vh;overflow-y:auto;border-top:2px solid rgba(212,168,83,0.2)}
+.modal-handle{width:40px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:0 auto 20px}
+.swap-alt{display:block;width:100%;padding:14px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:10px;text-align:left;cursor:pointer;margin-bottom:8px;-webkit-appearance:none}
+.swap-alt:active{background:rgba(212,168,83,0.08)}
+.swap-alt.cur{border-color:rgba(212,168,83,0.45);background:rgba(212,168,83,0.07)}
+.reb-row{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.reb-row:last-child{border-bottom:none}
+.d-pos{color:#6BAF8E}.d-neg{color:#E07B54}
+.share-btn{background:rgba(212,168,83,0.08);border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:8px 14px;color:#D4A853;font-size:10px;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap}
+.live-btn{background:rgba(107,175,142,0.08);border:1px solid rgba(107,175,142,0.3);border-radius:10px;padding:8px 14px;color:#6BAF8E;font-size:10px;letter-spacing:1px;cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap}
+.live-btn:disabled{opacity:0.5}
+#toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:#D4A853;color:#0B0E13;padding:10px 22px;border-radius:20px;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;opacity:0;transition:all 0.3s ease;z-index:400;pointer-events:none}
+@media print{.tab-bar,.share-btn,.live-btn,.btn-primary,.btn-ghost{display:none!important}.tab-content{display:block!important}.screen{display:block!important}#s-results{display:block!important}}
 </style>
 </head>
 <body>
@@ -159,9 +174,10 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
     <div class="lbl">PORTFOLIO ADVISOR — RESULTS</div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
       <div id="r-header" style="font-size:17px;font-weight:700"></div>
-      <div style="display:flex;gap:16px;align-items:center">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
         <div style="text-align:right"><div class="lbl">YIELD</div><div class="mono" style="color:#6BAF8E;font-weight:700;font-size:13px" id="r-yield">—</div></div>
         <div style="text-align:right"><div class="lbl">ER</div><div class="mono" style="font-weight:700;font-size:13px" id="r-er">—</div></div>
+        <button class="share-btn" onclick="openShare()">⬆ SHARE</button>
       </div>
     </div>
   </div>
@@ -754,9 +770,12 @@ function renderResults(a,total,dep,et){
       <div style="font-size:12px;color:#64748B;line-height:1.6;margin-bottom:12px;border-left:2px solid rgba(212,168,83,0.2);padding-left:10px">${info?.desc||''}</div>
       <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px"><span style="color:#4A5568">Amount</span><span class="mono">${fmt(total*wt/100)}</span></div>
       <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:8px"><span style="color:#4A5568">Yield / Exp. Ratio</span><span class="mono"><span style="color:#6BAF8E">${(info?.yld||0).toFixed(1)}%</span> / <span style="color:#4A5568">${(info?.er||0).toFixed(2)}%</span></span></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">
-        <span style="background:${col}22;color:${col};padding:2px 8px;border-radius:10px;font-size:9px;letter-spacing:1px;font-family:'DM Mono',monospace">${sub}</span>
-        <span style="background:rgba(107,175,142,0.1);color:#6BAF8E;padding:2px 8px;border-radius:10px;font-size:9px;letter-spacing:1px;font-family:'DM Mono',monospace">LOWEST ER IN CLASS</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span style="background:${col}22;color:${col};padding:2px 8px;border-radius:10px;font-size:9px;letter-spacing:1px;font-family:'DM Mono',monospace">${sub}</span>
+          <span style="background:rgba(107,175,142,0.1);color:#6BAF8E;padding:2px 8px;border-radius:10px;font-size:9px;letter-spacing:1px;font-family:'DM Mono',monospace">LOWEST ER</span>
+        </div>
+        <button onclick="openSwap('${t}')" style="background:rgba(212,168,83,0.08);border:1px solid rgba(212,168,83,0.2);border-radius:8px;padding:7px 14px;color:#D4A853;font-size:10px;letter-spacing:1px;cursor:pointer;font-family:'DM Mono',monospace;flex-shrink:0">⇄ SWAP</button>
       </div>
     </div>`;
   }).join('');
@@ -815,6 +834,156 @@ function restart(){
   document.getElementById('amount-inp').value='';
   show('s-welcome');
 }
+
+// ─── SWAP ────────────────────────────────────────────────────────────────────
+let swapTicker=null;
+function openSwap(ticker){
+  swapTicker=ticker;
+  const info=ETF_MAP[ticker];
+  const cat=info?.cat;
+  document.getElementById('swap-title').textContent=`${ticker} — ${info?.n||''}`;
+  document.getElementById('swap-cat').textContent=`${CAT_NAMES[cat]||cat} · ${info?.issuer||''}`;
+  const alts=UNIVERSE.filter(e=>e.cat===cat).sort((a,b)=>a.er-b.er);
+  document.getElementById('swap-options').innerHTML=alts.map(e=>`
+    <button class="swap-alt${e.t===ticker?' cur':''}" onclick="doSwap('${e.t}')">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span class="mono" style="font-size:14px;font-weight:700;color:${e.t===ticker?'#D4A853':'#E2E8F0'}">${e.t}</span>
+        <span class="mono" style="font-size:12px;color:#6BAF8E">${e.er.toFixed(2)}% ER${e.t===ticker?' ← CURRENT':''}</span>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:#94A3B8;margin-bottom:2px">${e.n}</div>
+      <div style="font-size:10px;color:#4A5568">${e.issuer} · Yield ${e.yld.toFixed(1)}%</div>
+    </button>`).join('');
+  document.getElementById('swap-modal').classList.add('open');
+}
+function closeSwap(){document.getElementById('swap-modal').classList.remove('open');}
+function doSwap(newT){
+  if(!swapTicker||newT===swapTicker){closeSwap();return;}
+  const w=alloc[swapTicker];
+  delete alloc[swapTicker];
+  alloc[newT]=(alloc[newT]||0)+w;
+  closeSwap();
+  const et=holdings.reduce((s,h)=>s+(parseFloat(h.value)||0),0);
+  renderResults(alloc,totalAmt,Math.max(0,totalAmt-et),et);
+  document.querySelectorAll('.tab-content').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tc-positions').classList.add('active');
+  document.querySelectorAll('.tab-btn')[1].classList.add('active');
+  showToast(`Swapped to ${newT}`);
+}
+
+// ─── LIVE DATA ─────────────────────────────────────────────────────────────
+async function fetchLiveData(){
+  const btn=document.getElementById('live-btn');
+  const status=document.getElementById('live-status');
+  btn.textContent='↻ FETCHING...';btn.disabled=true;
+  status.textContent='Connecting to Yahoo Finance...';status.style.color='#4A5568';
+  const tickers=Object.keys(alloc).join(',');
+  const yf=`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${tickers}&fields=regularMarketPrice,trailingAnnualDividendYield,annualReportExpenseRatio`;
+  const url=`https://corsproxy.io/?${encodeURIComponent(yf)}`;
+  try{
+    const res=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    if(!res.ok)throw new Error('bad response');
+    const json=await res.json();
+    const quotes=json?.quoteResponse?.result||[];
+    if(!quotes.length)throw new Error('no data');
+    let updated=0;
+    quotes.forEach(q=>{
+      const info=ETF_MAP[q.symbol];if(!info)return;
+      if(q.trailingAnnualDividendYield!=null){
+        info.yld=Math.round(q.trailingAnnualDividendYield*1000)/10;updated++;
+      }
+      if(q.annualReportExpenseRatio!=null&&q.annualReportExpenseRatio>0){
+        info.er=Math.round(q.annualReportExpenseRatio*10000)/100;
+      }
+    });
+    status.textContent=`✓ Updated ${updated} of ${quotes.length} ETFs · ${new Date().toLocaleTimeString()}`;
+    status.style.color='#6BAF8E';
+    const et=holdings.reduce((s,h)=>s+(parseFloat(h.value)||0),0);
+    renderResults(alloc,totalAmt,Math.max(0,totalAmt-et),et);
+    showToast(`Live data updated — ${updated} ETFs`);
+  }catch(e){
+    status.textContent='⚠ Could not reach Yahoo Finance — using stored values';
+    status.style.color='#E07B54';
+    showToast('Live data unavailable — using stored values');
+  }
+  btn.textContent='↻ REFRESH YIELDS';btn.disabled=false;
+}
+
+// ─── SHARE ──────────────────────────────────────────────────────────────────
+let _shareText='';
+function openShare(){
+  const sorted=Object.entries(alloc).sort((a,b)=>b[1]-a[1]);
+  const blY=sorted.reduce((s,[k,w])=>s+(ETF_MAP[k]?.yld||0)*w/100,0);
+  const blE=sorted.reduce((s,[k,w])=>s+(ETF_MAP[k]?.er||0)*w/100,0);
+  _shareText=[
+    'PORTFOLIO ADVISOR — SUMMARY',
+    '─────────────────────────────',
+    `Total: ${fmt(totalAmt)}  |  ${sorted.length} ETFs`,
+    `Blended Yield: ${blY.toFixed(2)}%  |  Expense Ratio: ${blE.toFixed(2)}%`,
+    '',
+    'POSITIONS:',
+    ...sorted.map(([t,w])=>`  ${t.padEnd(5)} ${String(w).padStart(5)}%  ${ETF_MAP[t]?.issuer||''}  —  ${ETF_MAP[t]?.n||''}`),
+    '',
+    `Generated by Portfolio Advisor · ${new Date().toLocaleDateString()}`
+  ].join('\n');
+  document.getElementById('share-text').textContent=_shareText;
+  document.getElementById('share-modal').classList.add('open');
+}
+function closeShare(){document.getElementById('share-modal').classList.remove('open');}
+async function copyText(){
+  try{
+    await navigator.clipboard.writeText(_shareText);
+    showToast('Copied to clipboard!');
+  }catch{
+    showToast('Select the text above and copy manually');
+  }
+}
+async function nativeShare(){
+  if(navigator.share){
+    try{
+      await navigator.share({title:'My ETF Portfolio',text:_shareText});
+    }catch(e){}
+  }else{
+    copyText();
+  }
+}
+
+// ─── TOAST ──────────────────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(0);background:#D4A853;color:#0B0E13;padding:10px 22px;border-radius:20px;font-size:12px;font-family:DM Mono,monospace;letter-spacing:1px;opacity:1;transition:all 0.3s ease;z-index:400;pointer-events:none;white-space:nowrap';
+  clearTimeout(t._tid);
+  t._tid=setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(80px)';},2500);
+}
 </script>
+
+<!-- SWAP MODAL -->
+<div class="modal-overlay" id="swap-modal" onclick="if(event.target===this)closeSwap()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="lbl" style="margin-bottom:4px">SWAP ETF</div>
+    <div id="swap-title" style="font-size:15px;font-weight:700;color:#E2E8F0;margin-bottom:2px"></div>
+    <div id="swap-cat" style="font-size:10px;color:#D4A853;font-family:'DM Mono',monospace;letter-spacing:1px;margin-bottom:16px"></div>
+    <div class="lbl" style="margin-bottom:10px">ALL ETFs IN THIS CATEGORY — SORTED BY EXPENSE RATIO</div>
+    <div id="swap-options"></div>
+    <button class="btn-ghost" onclick="closeSwap()" style="width:100%;justify-content:center;margin-top:12px">CANCEL</button>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="share-modal" onclick="if(event.target===this)closeShare()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="lbl" style="margin-bottom:16px">SHARE PORTFOLIO</div>
+    <pre id="share-text" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px;font-size:11px;color:#94A3B8;font-family:'DM Mono',monospace;line-height:1.8;margin-bottom:18px;overflow-x:auto;white-space:pre-wrap;word-break:break-word"></pre>
+    <button class="btn-primary" onclick="nativeShare()" style="margin-bottom:10px">⬆ SHARE</button>
+    <button class="btn-primary" onclick="copyText()" style="margin-bottom:10px;background:rgba(107,175,142,0.1);border-color:rgba(107,175,142,0.35);color:#6BAF8E">⎘ COPY TO CLIPBOARD</button>
+    <button class="btn-primary" onclick="window.print()" style="margin-bottom:16px;background:rgba(155,126,189,0.08);border-color:rgba(155,126,189,0.3);color:#9B7EBD">⎙ SAVE AS PDF</button>
+    <button class="btn-ghost" onclick="closeShare()" style="width:100%;justify-content:center">CLOSE</button>
+  </div>
+</div>
+
+<div id="toast"></div>
 </body>
 </html>
