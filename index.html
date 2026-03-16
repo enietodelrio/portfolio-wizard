@@ -8,8 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow-x:hidden}
-body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-height:100vh;max-width:480px;margin:0 auto}
+html{height:100%}
+body{overflow-x:hidden;background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-height:100vh;max-width:480px;margin:0 auto}
 .mono{font-family:'DM Mono',monospace}
 .gold{color:#D4A853}
 .lbl{font-size:9px;letter-spacing:3px;color:#4A5568;text-transform:uppercase;font-family:'DM Mono',monospace}
@@ -20,11 +20,11 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
 .prog-bar{height:3px;background:rgba(255,255,255,0.08);border-radius:2px}
 .prog-fill{height:100%;background:linear-gradient(90deg,#D4A853,#E8C547);border-radius:2px;transition:width 0.4s ease}
 .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px}
-.btn-primary{display:block;width:100%;padding:18px;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.4);border-radius:14px;color:#D4A853;font-size:13px;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;text-align:center;transition:all 0.15s;-webkit-appearance:none}
+.btn-primary{display:block;width:100%;padding:18px;touch-action:manipulation;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.4);border-radius:14px;color:#D4A853;font-size:13px;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;text-align:center;transition:all 0.15s;-webkit-appearance:none}
 .btn-primary:active{background:rgba(212,168,83,0.2);transform:scale(0.98)}
-.btn-ghost{display:inline-flex;align-items:center;gap:6px;padding:12px 20px;background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#94A3B8;font-size:11px;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;transition:all 0.15s}
+.btn-ghost{display:inline-flex;align-items:center;touch-action:manipulation;gap:6px;padding:12px 20px;background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#94A3B8;font-size:11px;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;transition:all 0.15s}
 .btn-ghost:active{background:rgba(255,255,255,0.05)}
-.opt{display:block;width:100%;padding:18px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:14px;text-align:left;color:#94A3B8;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;margin-bottom:10px;-webkit-appearance:none}
+.opt{display:block;width:100%;padding:18px 16px;touch-action:manipulation;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:14px;text-align:left;color:#94A3B8;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;margin-bottom:10px;-webkit-appearance:none}
 .opt:active{background:rgba(212,168,83,0.08)}
 .opt.sel{background:rgba(212,168,83,0.1);border-color:rgba(212,168,83,0.5);color:#D4A853}
 .inp{display:block;width:100%;padding:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#E2E8F0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none;-webkit-appearance:none;appearance:none}
@@ -34,7 +34,7 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
 .srow{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
 .srow:last-child{border-bottom:none}
 .tab-bar{display:flex;background:#131820;border-bottom:2px solid rgba(212,168,83,0.15);position:sticky;top:0;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
-.tab-btn{flex:1;padding:14px 4px 16px;font-size:10px;letter-spacing:1px;cursor:pointer;background:none;border:none;border-bottom:3px solid transparent;color:#4A5568;font-family:'DM Mono',monospace;transition:all 0.2s;-webkit-appearance:none;display:flex;flex-direction:column;align-items:center;gap:5px}
+.tab-btn{flex:1;padding:14px 4px 16px;touch-action:manipulation;font-size:10px;letter-spacing:1px;cursor:pointer;background:none;border:none;border-bottom:3px solid transparent;color:#4A5568;font-family:'DM Mono',monospace;transition:all 0.2s;-webkit-appearance:none;display:flex;flex-direction:column;align-items:center;gap:5px}
 .tab-btn.active{border-bottom-color:#D4A853;color:#D4A853;background:rgba(212,168,83,0.06)}
 .tab-btn .tab-icon{font-size:20px;line-height:1}
 .h-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
@@ -50,13 +50,13 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
 .modal-overlay.open{display:flex}
 .modal-sheet{background:#131820;border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;max-height:82vh;overflow-y:auto;border-top:2px solid rgba(212,168,83,0.2)}
 .modal-handle{width:40px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:0 auto 20px}
-.swap-alt{display:block;width:100%;padding:14px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:10px;text-align:left;cursor:pointer;margin-bottom:8px;-webkit-appearance:none}
+.swap-alt{display:block;width:100%;touch-action:manipulation;padding:14px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:10px;text-align:left;cursor:pointer;margin-bottom:8px;-webkit-appearance:none}
 .swap-alt:active{background:rgba(212,168,83,0.08)}
 .swap-alt.cur{border-color:rgba(212,168,83,0.45);background:rgba(212,168,83,0.07)}
 .reb-row{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
 .reb-row:last-child{border-bottom:none}
 .d-pos{color:#6BAF8E}.d-neg{color:#E07B54}
-.share-btn{background:rgba(212,168,83,0.08);border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:8px 14px;color:#D4A853;font-size:10px;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap}
+.share-btn{background:rgba(212,168,83,0.08);touch-action:manipulation;border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:8px 14px;color:#D4A853;font-size:10px;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap}
 .live-btn{background:rgba(107,175,142,0.08);border:1px solid rgba(107,175,142,0.3);border-radius:10px;padding:8px 14px;color:#6BAF8E;font-size:10px;letter-spacing:1px;cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap}
 .live-btn:disabled{opacity:0.5}
 #toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:#D4A853;color:#0B0E13;padding:10px 22px;border-radius:20px;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:1px;opacity:0;transition:all 0.3s ease;z-index:400;pointer-events:none}
@@ -841,21 +841,36 @@ function openSwap(ticker){
   swapTicker=ticker;
   const info=ETF_MAP[ticker];
   const cat=info?.cat;
-  document.getElementById('swap-title').textContent=`${ticker} — ${info?.n||''}`;
-  document.getElementById('swap-cat').textContent=`${CAT_NAMES[cat]||cat} · ${info?.issuer||''}`;
+  document.getElementById('swap-title').textContent=ticker+' — '+(info?.n||'');
+  document.getElementById('swap-cat').textContent=(CAT_NAMES[cat]||cat)+' · '+(info?.issuer||'');
   const alts=UNIVERSE.filter(e=>e.cat===cat).sort((a,b)=>a.er-b.er);
-  document.getElementById('swap-options').innerHTML=alts.map(e=>`
-    <button class="swap-alt${e.t===ticker?' cur':''}" onclick="doSwap('${e.t}')">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-        <span class="mono" style="font-size:14px;font-weight:700;color:${e.t===ticker?'#D4A853':'#E2E8F0'}">${e.t}</span>
-        <span class="mono" style="font-size:12px;color:#6BAF8E">${e.er.toFixed(2)}% ER${e.t===ticker?' ← CURRENT':''}</span>
-      </div>
-      <div style="font-size:12px;font-weight:600;color:#94A3B8;margin-bottom:2px">${e.n}</div>
-      <div style="font-size:10px;color:#4A5568">${e.issuer} · Yield ${e.yld.toFixed(1)}%</div>
-    </button>`).join('');
-  document.getElementById('swap-modal').classList.add('open');
+  document.getElementById('swap-options').innerHTML=alts.map(e=>{
+    const cur=e.t===ticker;
+    return '<button class="swap-alt'+(cur?' cur':'')+'" data-t="'+e.t+'">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'
+      +'<span class="mono" style="font-size:14px;font-weight:700;color:'+(cur?'#D4A853':'#E2E8F0')+'">'+e.t+'</span>'
+      +'<span class="mono" style="font-size:12px;color:#6BAF8E">'+e.er.toFixed(2)+'% ER'+(cur?' ← NOW':'')+'</span>'
+      +'</div>'
+      +'<div style="font-size:12px;font-weight:600;color:#94A3B8;margin-bottom:2px">'+e.n+'</div>'
+      +'<div style="font-size:10px;color:#4A5568">'+e.issuer+' · Yield '+e.yld.toFixed(1)+'%</div>'
+      +'</button>';
+  }).join('');
+  // Use event delegation on the container - works better on mobile
+  const el=document.getElementById('swap-options');
+  el.ontouchend=function(e){
+    e.preventDefault();
+    const btn=e.target.closest('[data-t]');
+    if(btn)doSwap(btn.dataset.t);
+  };
+  el.onclick=function(e){
+    const btn=e.target.closest('[data-t]');
+    if(btn)doSwap(btn.dataset.t);
+  };
+  const modal=document.getElementById('swap-modal');
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
 }
-function closeSwap(){document.getElementById('swap-modal').classList.remove('open');}
+function closeSwap(){document.getElementById('swap-modal').classList.remove('open');document.body.style.overflow='';}
 function doSwap(newT){
   if(!swapTicker||newT===swapTicker){closeSwap();return;}
   const w=alloc[swapTicker];
@@ -927,9 +942,9 @@ function openShare(){
     `Generated by Portfolio Advisor · ${new Date().toLocaleDateString()}`
   ].join('\n');
   document.getElementById('share-text').textContent=_shareText;
-  document.getElementById('share-modal').classList.add('open');
+  document.getElementById('share-modal').classList.add('open');document.body.style.overflow='hidden';
 }
-function closeShare(){document.getElementById('share-modal').classList.remove('open');}
+function closeShare(){document.getElementById('share-modal').classList.remove('open');document.body.style.overflow='';}
 async function copyText(){
   try{
     await navigator.clipboard.writeText(_shareText);
@@ -960,7 +975,7 @@ function showToast(msg){
 
 <!-- SWAP MODAL -->
 <div class="modal-overlay" id="swap-modal" onclick="if(event.target===this)closeSwap()">
-  <div class="modal-sheet">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
     <div class="lbl" style="margin-bottom:4px">SWAP ETF</div>
     <div id="swap-title" style="font-size:15px;font-weight:700;color:#E2E8F0;margin-bottom:2px"></div>
@@ -973,7 +988,7 @@ function showToast(msg){
 
 <!-- SHARE MODAL -->
 <div class="modal-overlay" id="share-modal" onclick="if(event.target===this)closeShare()">
-  <div class="modal-sheet">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
     <div class="lbl" style="margin-bottom:16px">SHARE PORTFOLIO</div>
     <pre id="share-text" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px;font-size:11px;color:#94A3B8;font-family:'DM Mono',monospace;line-height:1.8;margin-bottom:18px;overflow-x:auto;white-space:pre-wrap;word-break:break-word"></pre>
