@@ -33,9 +33,9 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
 .chip{background:rgba(212,168,83,0.06);border:1px solid rgba(212,168,83,0.15);border-radius:20px;padding:5px 12px;font-size:9px;color:#D4A853;letter-spacing:1px;font-family:'DM Mono',monospace;display:inline-block;margin:3px 3px 3px 0}
 .srow{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
 .srow:last-child{border-bottom:none}
-.tab-bar{display:flex;background:#131820;border-top:2px solid rgba(212,168,83,0.15);position:sticky;bottom:0;z-index:100;box-shadow:0 -8px 32px rgba(0,0,0,0.5)}
-.tab-btn{flex:1;padding:16px 4px 14px;font-size:10px;letter-spacing:1px;cursor:pointer;background:none;border:none;border-top:3px solid transparent;color:#4A5568;font-family:'DM Mono',monospace;transition:all 0.2s;-webkit-appearance:none;display:flex;flex-direction:column;align-items:center;gap:5px}
-.tab-btn.active{border-top-color:#D4A853;color:#D4A853;background:rgba(212,168,83,0.06)}
+.tab-bar{display:flex;background:#131820;border-bottom:2px solid rgba(212,168,83,0.15);position:sticky;top:0;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+.tab-btn{flex:1;padding:14px 4px 16px;font-size:10px;letter-spacing:1px;cursor:pointer;background:none;border:none;border-bottom:3px solid transparent;color:#4A5568;font-family:'DM Mono',monospace;transition:all 0.2s;-webkit-appearance:none;display:flex;flex-direction:column;align-items:center;gap:5px}
+.tab-btn.active{border-bottom-color:#D4A853;color:#D4A853;background:rgba(212,168,83,0.06)}
 .tab-btn .tab-icon{font-size:20px;line-height:1}
 .h-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
 .rm-btn{background:none;border:none;color:#4A5568;cursor:pointer;font-size:22px;padding:4px 6px;line-height:1;flex-shrink:0}
@@ -44,7 +44,7 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
 .cbar-bg{height:5px;background:rgba(255,255,255,0.05);border-radius:3px;margin-top:5px}
 .pos-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:14px 16px;margin-bottom:10px}
 .sc-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px 16px;margin-bottom:10px}
-.tab-content{display:none;padding:20px;padding-bottom:100px}.tab-content.active{display:block}
+.tab-content{display:none;padding:20px}.tab-content.active{display:block}
 @supports(padding-bottom:env(safe-area-inset-bottom)){.tab-bar{padding-bottom:env(safe-area-inset-bottom)}}
 </style>
 </head>
@@ -102,8 +102,54 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
     <div id="h-list" style="margin-bottom:12px"></div>
     <button class="btn-ghost" onclick="addH()" style="margin-bottom:24px">+ ADD HOLDING</button>
     <div id="h-summary" style="display:none;margin-bottom:24px"></div>
-    <button class="btn-primary" onclick="buildPortfolio()" style="margin-bottom:14px">BUILD MY PORTFOLIO →</button>
+    <button class="btn-primary" onclick="show('s-notice')" style="margin-bottom:14px">BUILD MY PORTFOLIO →</button>
     <button class="btn-ghost" onclick="show('s-amount')">← BACK</button>
+  </div>
+</div>
+
+<!-- METHODOLOGY NOTICE -->
+<div id="s-notice" class="screen">
+  <div style="padding:48px 20px 0">
+    <div class="lbl" style="margin-bottom:16px">BEFORE WE BUILD YOUR PORTFOLIO</div>
+    <h2 style="font-size:24px;font-weight:700;line-height:1.2;margin-bottom:28px">How your portfolio<br/>is constructed</h2>
+
+    <div class="card" style="margin-bottom:14px;border-color:rgba(212,168,83,0.2)">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="font-size:24px;flex-shrink:0">①</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:6px">Your answers drive the allocation</div>
+          <div style="font-size:13px;color:#64748B;line-height:1.7">Your goal, time horizon, risk tolerance, income needs, liquidity, inflation concern, international preference and USD view are used to determine how much weight to assign to each asset class.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;border-color:rgba(107,175,142,0.2)">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="font-size:24px;flex-shrink:0">②</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:6px">Lowest expense ratio ETF in each class</div>
+          <div style="font-size:13px;color:#64748B;line-height:1.7">Once the asset class weights are set, the tool selects the single lowest expense ratio ETF available within each category from a universe of 130+ ETFs across issuers including Vanguard, BlackRock, Schwab, Fidelity and State Street.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;border-color:rgba(155,126,189,0.2)">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="font-size:24px;flex-shrink:0">③</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:6px">Trimmed to your target position count</div>
+          <div style="font-size:13px;color:#64748B;line-height:1.7">The engine may identify more categories than your target. The highest-conviction positions are kept and weights are renormalized so your portfolio always sums to 100%.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:rgba(212,168,83,0.05);border:1px solid rgba(212,168,83,0.15);border-radius:12px;padding:16px;margin-bottom:32px">
+      <div style="font-size:11px;color:#D4A853;font-family:'DM Mono',monospace;letter-spacing:1px;margin-bottom:6px">IMPORTANT DISCLAIMER</div>
+      <div style="font-size:12px;color:#64748B;line-height:1.7">This tool is for informational purposes only. ETF data including expense ratios and yields reflects estimates at time of publication and may have changed. This is not financial advice. Always verify current fund details and consult a licensed financial advisor before investing.</div>
+    </div>
+
+    <button class="btn-primary" onclick="confirmAndBuild()" style="margin-bottom:14px">BUILD MY PORTFOLIO →</button>
+    <button class="btn-ghost" onclick="show('s-holdings')">← BACK</button>
   </div>
 </div>
 
@@ -118,6 +164,12 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
         <div style="text-align:right"><div class="lbl">ER</div><div class="mono" style="font-weight:700;font-size:13px" id="r-er">—</div></div>
       </div>
     </div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('overview',this)"><span class="tab-icon">◎</span>OVERVIEW</button>
+    <button class="tab-btn" onclick="switchTab('positions',this)"><span class="tab-icon">≡</span>POSITIONS</button>
+    <button class="tab-btn" onclick="switchTab('deployment',this)"><span class="tab-icon">↗</span>DEPLOY</button>
+    <button class="tab-btn" onclick="switchTab('backtest',this)"><span class="tab-icon">◈</span>BACKTEST</button>
   </div>
   <div id="tc-overview" class="tab-content active">
     <div style="margin-bottom:16px">
@@ -148,12 +200,6 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
     <div id="bt-cards"></div>
     <div class="card" style="border-color:rgba(212,168,83,0.1);background:rgba(212,168,83,0.03)"><div style="font-size:9px;color:#4A5568;line-height:1.8;font-family:'DM Mono',monospace">Backtest returns are modeled estimates based on historical asset class behavior. Past performance is not indicative of future results. Not financial advice.</div></div>
   </div>
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('overview',this)"><span class="tab-icon">◎</span>OVERVIEW</button>
-    <button class="tab-btn" onclick="switchTab('positions',this)"><span class="tab-icon">≡</span>POSITIONS</button>
-    <button class="tab-btn" onclick="switchTab('deployment',this)"><span class="tab-icon">↗</span>DEPLOY</button>
-    <button class="tab-btn" onclick="switchTab('backtest',this)"><span class="tab-icon">◈</span>BACKTEST</button>
-  </div>
 </div>
 
 <script>
@@ -162,181 +208,182 @@ body{background:#0B0E13;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-heigh
 // subcat: fine-grained label shown in UI
 // er: expense ratio %, yld: estimated yield %
 // region: used for intl filtering
+// issuer: fund provider, desc: one-line strategy description
 const UNIVERSE = [
   // ── CASH / ULTRA-SHORT ──
-  {t:"SGOV", n:"iShares 0-3Mo Treasury",        cat:"cash",      sub:"Ultra-Short Govt",   er:0.07, yld:5.1},
-  {t:"CLTL", n:"Invesco Treasury Collateral",    cat:"cash",      sub:"Ultra-Short Govt",   er:0.08, yld:5.0},
-  {t:"TBLL", n:"SPDR Bloomberg 3-Mo T-Bill",     cat:"cash",      sub:"Ultra-Short Govt",   er:0.08, yld:5.0},
-  {t:"BIL",  n:"SPDR Bloomberg 1-3Mo T-Bill",    cat:"cash",      sub:"Ultra-Short Govt",   er:0.14, yld:4.9},
-  {t:"SHV",  n:"iShares Short Treasury Bond",    cat:"cash",      sub:"Ultra-Short Govt",   er:0.15, yld:4.9},
+  {t:"SGOV", n:"iShares 0-3Mo Treasury Bond",     issuer:"BlackRock",  desc:"Tracks US Treasury bills with 0-3 month maturity. Maximum safety, near money-market yield.",                          cat:"cash",       sub:"Ultra-Short Govt",   er:0.07, yld:5.1},
+  {t:"CLTL", n:"Invesco Treasury Collateral ETF",  issuer:"Invesco",    desc:"Holds 3-month T-bills used as collateral. Equivalent to cash with minimal duration risk.",                           cat:"cash",       sub:"Ultra-Short Govt",   er:0.08, yld:5.0},
+  {t:"TBLL", n:"SPDR Bloomberg 3-Mo T-Bill",       issuer:"State Street",desc:"Passively tracks 3-month US Treasury bill index. Near-zero volatility, full government backing.",                  cat:"cash",       sub:"Ultra-Short Govt",   er:0.08, yld:5.0},
+  {t:"BIL",  n:"SPDR Bloomberg 1-3Mo T-Bill",      issuer:"State Street",desc:"Tracks 1-3 month Treasury bills. Ideal cash substitute with daily liquidity and FDIC-equivalent safety.",          cat:"cash",       sub:"Ultra-Short Govt",   er:0.14, yld:4.9},
+  {t:"SHV",  n:"iShares Short Treasury Bond",      issuer:"BlackRock",  desc:"Holds Treasury bills under 1 year. Preserves capital while earning short-term government rates.",                   cat:"cash",       sub:"Ultra-Short Govt",   er:0.15, yld:4.9},
   // ── SHORT-TERM BONDS ──
-  {t:"SCHO", n:"Schwab Short-Term US Tsy",       cat:"fixed_st",  sub:"Short-Term Govt",    er:0.03, yld:4.5},
-  {t:"VGSH", n:"Vanguard Short-Term Tsy",        cat:"fixed_st",  sub:"Short-Term Govt",    er:0.04, yld:4.5},
-  {t:"BSV",  n:"Vanguard Short-Term Bond",       cat:"fixed_st",  sub:"Short-Term Bond",    er:0.04, yld:4.3},
-  {t:"SHY",  n:"iShares 1-3Yr Treasury",         cat:"fixed_st",  sub:"Short-Term Govt",    er:0.15, yld:4.4},
-  {t:"ISTB", n:"iShares Core 1-5Yr USD Bond",    cat:"fixed_st",  sub:"Short-Term Bond",    er:0.06, yld:4.2},
+  {t:"SCHO", n:"Schwab Short-Term US Treasury",    issuer:"Schwab",     desc:"Tracks short-term US Treasury index (1-3 yr). Lowest cost in class, minimal interest rate risk.",                  cat:"fixed_st",   sub:"Short-Term Govt",    er:0.03, yld:4.5},
+  {t:"VGSH", n:"Vanguard Short-Term Treasury",     issuer:"Vanguard",   desc:"1-3 year Treasury bonds. Low credit risk, modest duration. Core defensive fixed income holding.",                   cat:"fixed_st",   sub:"Short-Term Govt",    er:0.04, yld:4.5},
+  {t:"BSV",  n:"Vanguard Short-Term Bond",         issuer:"Vanguard",   desc:"Broad short-term investment grade bonds (govt + corp). Slightly higher yield than pure Treasuries.",                cat:"fixed_st",   sub:"Short-Term Bond",    er:0.04, yld:4.3},
+  {t:"SHY",  n:"iShares 1-3 Year Treasury Bond",   issuer:"BlackRock",  desc:"Pure 1-3 year US government bonds. Highly liquid, near-zero credit risk, stable NAV.",                             cat:"fixed_st",   sub:"Short-Term Govt",    er:0.15, yld:4.4},
+  {t:"ISTB", n:"iShares Core 1-5Yr USD Bond",      issuer:"BlackRock",  desc:"Broad US investment grade bonds 1-5 years. Balances safety and yield across govt and corporate issuers.",           cat:"fixed_st",   sub:"Short-Term Bond",    er:0.06, yld:4.2},
   // ── INTERMEDIATE BONDS ──
-  {t:"SCHR", n:"Schwab Intermediate US Tsy",     cat:"fixed_it",  sub:"Interm. Govt",       er:0.03, yld:4.0},
-  {t:"VGIT", n:"Vanguard Interm. Tsy",           cat:"fixed_it",  sub:"Interm. Govt",       er:0.04, yld:4.0},
-  {t:"IEF",  n:"iShares 7-10Yr Treasury",        cat:"fixed_it",  sub:"Interm. Govt",       er:0.15, yld:3.9},
-  {t:"BIV",  n:"Vanguard Interm. Bond",          cat:"fixed_it",  sub:"Interm. Bond",       er:0.04, yld:3.8},
+  {t:"SCHR", n:"Schwab Intermediate US Treasury",  issuer:"Schwab",     desc:"3-10 year US Treasuries at rock-bottom cost. Moderate duration, pure government credit quality.",                  cat:"fixed_it",   sub:"Interm. Govt",       er:0.03, yld:4.0},
+  {t:"VGIT", n:"Vanguard Intermediate Treasury",   issuer:"Vanguard",   desc:"5-10 year US government bonds. Classic ballast against equity volatility, negative correlation in crises.",        cat:"fixed_it",   sub:"Interm. Govt",       er:0.04, yld:4.0},
+  {t:"IEF",  n:"iShares 7-10 Year Treasury Bond",  issuer:"BlackRock",  desc:"7-10 year Treasury benchmark. Widely used duration hedge; rises when equities fall sharply.",                      cat:"fixed_it",   sub:"Interm. Govt",       er:0.15, yld:3.9},
+  {t:"BIV",  n:"Vanguard Intermediate-Term Bond",  issuer:"Vanguard",   desc:"Intermediate investment grade blend of government and corporate bonds. Yield pickup over pure Treasuries.",         cat:"fixed_it",   sub:"Interm. Bond",       er:0.04, yld:3.8},
   // ── LONG-TERM BONDS ──
-  {t:"SPTL", n:"SPDR Portfolio Long-Term Tsy",   cat:"fixed_lt",  sub:"Long-Term Govt",     er:0.03, yld:4.5},
-  {t:"VGLT", n:"Vanguard Long-Term Tsy",         cat:"fixed_lt",  sub:"Long-Term Govt",     er:0.04, yld:4.5},
-  {t:"TLT",  n:"iShares 20+Yr Treasury",         cat:"fixed_lt",  sub:"Long-Term Govt",     er:0.15, yld:4.4},
-  {t:"BLV",  n:"Vanguard Long-Term Bond",        cat:"fixed_lt",  sub:"Long-Term Bond",     er:0.04, yld:4.3},
+  {t:"SPTL", n:"SPDR Portfolio Long-Term Treasury", issuer:"State Street",desc:"10-30 year US Treasuries at ultra-low cost. Maximum duration; strong crisis hedge, high rate sensitivity.",      cat:"fixed_lt",   sub:"Long-Term Govt",     er:0.03, yld:4.5},
+  {t:"VGLT", n:"Vanguard Long-Term Treasury",       issuer:"Vanguard",   desc:"Long-duration US government bonds 10+ years. High volatility but powerful diversifier in equity downturns.",     cat:"fixed_lt",   sub:"Long-Term Govt",     er:0.04, yld:4.5},
+  {t:"TLT",  n:"iShares 20+ Year Treasury Bond",    issuer:"BlackRock",  desc:"The most liquid long-bond ETF. 20+ year Treasuries; surges during recessions and equity crashes.",               cat:"fixed_lt",   sub:"Long-Term Govt",     er:0.15, yld:4.4},
+  {t:"BLV",  n:"Vanguard Long-Term Bond",            issuer:"Vanguard",   desc:"Long-term investment grade bonds, govt + corporate blend. Higher yield than pure long Treasuries.",             cat:"fixed_lt",   sub:"Long-Term Bond",     er:0.04, yld:4.3},
   // ── TOTAL BOND MARKET ──
-  {t:"SCHZ", n:"Schwab US Aggregate Bond",       cat:"fixed_agg", sub:"Total Bond Market",  er:0.03, yld:3.5},
-  {t:"BND",  n:"Vanguard Total Bond Market",     cat:"fixed_agg", sub:"Total Bond Market",  er:0.03, yld:3.5},
-  {t:"AGG",  n:"iShares Core US Aggregate Bond", cat:"fixed_agg", sub:"Total Bond Market",  er:0.03, yld:3.5},
-  {t:"IUSB", n:"iShares Core Total USD Bond",    cat:"fixed_agg", sub:"Total Bond Market",  er:0.06, yld:3.4},
+  {t:"SCHZ", n:"Schwab US Aggregate Bond",          issuer:"Schwab",     desc:"Full US investment grade bond market in one fund — the lowest cost total bond ETF available.",                   cat:"fixed_agg",  sub:"Total Bond Market",  er:0.03, yld:3.5},
+  {t:"BND",  n:"Vanguard Total Bond Market",         issuer:"Vanguard",   desc:"~10,000 US investment grade bonds across all maturities. The gold standard one-stop bond allocation.",           cat:"fixed_agg",  sub:"Total Bond Market",  er:0.03, yld:3.5},
+  {t:"AGG",  n:"iShares Core US Aggregate Bond",     issuer:"BlackRock",  desc:"Tracks Bloomberg US Agg index. Most widely held bond ETF; government, corporate and MBS exposure.",             cat:"fixed_agg",  sub:"Total Bond Market",  er:0.03, yld:3.5},
+  {t:"IUSB", n:"iShares Core Total USD Bond Market", issuer:"BlackRock",  desc:"Broader than AGG — adds high yield and non-agency bonds. More yield for slightly more risk.",                   cat:"fixed_agg",  sub:"Total Bond Market",  er:0.06, yld:3.4},
   // ── TIPS / INFLATION ──
-  {t:"SCHP", n:"Schwab US TIPS",                 cat:"fixed_tips",sub:"Inflation-Protected", er:0.03, yld:2.8},
-  {t:"VTIP", n:"Vanguard Short-Term TIPS",       cat:"fixed_tips",sub:"Inflation-Protected", er:0.04, yld:3.0},
-  {t:"STIP", n:"iShares 0-5Yr TIPS Bond",        cat:"fixed_tips",sub:"Inflation-Protected", er:0.03, yld:3.0},
-  {t:"TIP",  n:"iShares TIPS Bond",              cat:"fixed_tips",sub:"Inflation-Protected", er:0.19, yld:2.8},
+  {t:"SCHP", n:"Schwab US TIPS",                    issuer:"Schwab",     desc:"Treasury inflation-protected securities at minimum cost. Principal adjusts with CPI — best pure inflation hedge.", cat:"fixed_tips", sub:"Inflation-Protected",er:0.03, yld:2.8},
+  {t:"VTIP", n:"Vanguard Short-Term TIPS",           issuer:"Vanguard",   desc:"0-5 year TIPS. Lower duration than broad TIPS; less rate risk while still protecting against surprise inflation.",cat:"fixed_tips", sub:"Inflation-Protected",er:0.04, yld:3.0},
+  {t:"STIP", n:"iShares 0-5 Year TIPS Bond",         issuer:"BlackRock",  desc:"Short-term inflation-protected Treasuries. Fast response to CPI changes with minimal interest rate drag.",      cat:"fixed_tips", sub:"Inflation-Protected",er:0.03, yld:3.0},
+  {t:"TIP",  n:"iShares TIPS Bond",                  issuer:"BlackRock",  desc:"Broad maturity TIPS index. Classic inflation hedge; tends to outperform nominal bonds during inflationary periods.",cat:"fixed_tips",sub:"Inflation-Protected",er:0.19, yld:2.8},
   // ── INVESTMENT GRADE CORP ──
-  {t:"VCIT", n:"Vanguard Interm. Corp Bond",     cat:"fixed_corp",sub:"Corp Bond IG",        er:0.04, yld:4.5},
-  {t:"SPIB", n:"SPDR Portfolio Interm. Corp",    cat:"fixed_corp",sub:"Corp Bond IG",        er:0.04, yld:4.5},
-  {t:"IGIB", n:"iShares 5-10Yr IG Corp",         cat:"fixed_corp",sub:"Corp Bond IG",        er:0.06, yld:4.4},
-  {t:"LQD",  n:"iShares IG Corp Bond",           cat:"fixed_corp",sub:"Corp Bond IG",        er:0.14, yld:4.3},
+  {t:"VCIT", n:"Vanguard Intermediate-Term Corp Bond",issuer:"Vanguard",  desc:"5-10 year investment grade corporate bonds. Yield premium over Treasuries with manageable credit risk.",         cat:"fixed_corp", sub:"Corp Bond IG",       er:0.04, yld:4.5},
+  {t:"SPIB", n:"SPDR Portfolio Intermediate Corp",    issuer:"State Street",desc:"Intermediate IG corporate bond index at near-zero cost. Diversified across hundreds of investment grade issuers.",cat:"fixed_corp",sub:"Corp Bond IG",       er:0.04, yld:4.5},
+  {t:"IGIB", n:"iShares 5-10 Year IG Corporate Bond", issuer:"BlackRock", desc:"Investment grade corporates 5-10 years. Solid income from top-rated companies like Apple, Microsoft, J&J.",      cat:"fixed_corp", sub:"Corp Bond IG",       er:0.06, yld:4.4},
+  {t:"LQD",  n:"iShares iBoxx IG Corporate Bond",     issuer:"BlackRock", desc:"The most liquid corporate bond ETF. Broad IG exposure; benchmark for institutional corporate bond allocation.",  cat:"fixed_corp", sub:"Corp Bond IG",       er:0.14, yld:4.3},
   // ── HIGH YIELD ──
-  {t:"USHY", n:"iShares Broad USD HY Bond",      cat:"fixed_hy",  sub:"High Yield Bond",    er:0.08, yld:6.5},
-  {t:"FALN", n:"iShares Fallen Angels USD Bond", cat:"fixed_hy",  sub:"High Yield Bond",    er:0.25, yld:6.2},
-  {t:"JNK",  n:"SPDR Bloomberg HY Bond",         cat:"fixed_hy",  sub:"High Yield Bond",    er:0.40, yld:6.5},
-  {t:"HYG",  n:"iShares iBoxx HY Corp",          cat:"fixed_hy",  sub:"High Yield Bond",    er:0.48, yld:6.3},
+  {t:"USHY", n:"iShares Broad USD High Yield Bond",  issuer:"BlackRock",  desc:"Widest US high yield coverage at lowest cost. 2,000+ below-investment-grade bonds. Higher risk, higher income.",  cat:"fixed_hy",   sub:"High Yield Bond",    er:0.08, yld:6.5},
+  {t:"FALN", n:"iShares Fallen Angels USD Bond",      issuer:"BlackRock",  desc:"Bonds recently downgraded from IG to HY. Historically outperforms pure HY; managers forced to sell at lows.",   cat:"fixed_hy",   sub:"High Yield Bond",    er:0.25, yld:6.2},
+  {t:"JNK",  n:"SPDR Bloomberg High Yield Bond",      issuer:"State Street",desc:"One of the most liquid high yield ETFs. Tracks liquid tier of US junk bonds; widely used for tactical income.",  cat:"fixed_hy",   sub:"High Yield Bond",    er:0.40, yld:6.5},
+  {t:"HYG",  n:"iShares iBoxx High Yield Corporate",  issuer:"BlackRock",  desc:"Flagship high yield ETF. Extremely liquid options market; benchmark for HY credit exposure in portfolios.",       cat:"fixed_hy",   sub:"High Yield Bond",    er:0.48, yld:6.3},
   // ── INTERNATIONAL BONDS ──
-  {t:"BNDX", n:"Vanguard Total Intl Bond",       cat:"fixed_intl",sub:"Intl Bond",          er:0.07, yld:3.1},
-  {t:"IAGG", n:"iShares Core Intl Agg Bond",     cat:"fixed_intl",sub:"Intl Bond",          er:0.07, yld:3.0},
-  {t:"BWX",  n:"SPDR Bloomberg Intl Tsy",        cat:"fixed_intl",sub:"Intl Bond",          er:0.35, yld:2.8},
+  {t:"BNDX", n:"Vanguard Total International Bond",   issuer:"Vanguard",   desc:"USD-hedged international investment grade bonds. Adds global diversification without currency risk.",            cat:"fixed_intl", sub:"Intl Bond",          er:0.07, yld:3.1},
+  {t:"IAGG", n:"iShares Core International Aggregate",issuer:"BlackRock",  desc:"Hedged global ex-US bond market. Diversified across 50+ countries; complements domestic bond holdings.",         cat:"fixed_intl", sub:"Intl Bond",          er:0.07, yld:3.0},
+  {t:"BWX",  n:"SPDR Bloomberg Intl Treasury Bond",    issuer:"State Street",desc:"Unhedged international government bonds. Exposure to foreign sovereign credit and currency movements.",         cat:"fixed_intl", sub:"Intl Bond",          er:0.35, yld:2.8},
   // ── MUNICIPAL BONDS ──
-  {t:"VTEB", n:"Vanguard Tax-Exempt Bond",       cat:"fixed_muni",sub:"Municipal Bond",     er:0.05, yld:3.2},
-  {t:"MUB",  n:"iShares National Muni Bond",     cat:"fixed_muni",sub:"Municipal Bond",     er:0.07, yld:3.1},
-  {t:"TFI",  n:"SPDR Nuveen Bloomberg Muni",     cat:"fixed_muni",sub:"Municipal Bond",     er:0.23, yld:3.0},
+  {t:"VTEB", n:"Vanguard Tax-Exempt Bond",             issuer:"Vanguard",   desc:"Lowest-cost national muni bond ETF. Tax-free income ideal for investors in high federal tax brackets.",          cat:"fixed_muni", sub:"Municipal Bond",     er:0.05, yld:3.2},
+  {t:"MUB",  n:"iShares National Municipal Bond",      issuer:"BlackRock",  desc:"Largest muni ETF by AUM. Investment grade municipal bonds; tax-exempt income from states, cities and agencies.",  cat:"fixed_muni", sub:"Municipal Bond",     er:0.07, yld:3.1},
+  {t:"TFI",  n:"SPDR Nuveen Bloomberg Municipal",      issuer:"State Street",desc:"Tracks investment grade muni index. Actively managed-quality selection within passive structure.",               cat:"fixed_muni", sub:"Municipal Bond",     er:0.23, yld:3.0},
   // ── US TOTAL MARKET ──
-  {t:"SCHB", n:"Schwab US Broad Market",         cat:"eq_us_tot", sub:"US Total Market",    er:0.03, yld:1.3},
-  {t:"VTI",  n:"Vanguard Total Stock Market",    cat:"eq_us_tot", sub:"US Total Market",    er:0.03, yld:1.3},
-  {t:"ITOT", n:"iShares Core S&P Total US",      cat:"eq_us_tot", sub:"US Total Market",    er:0.03, yld:1.3},
-  {t:"SPTM", n:"SPDR Portfolio US Total Market", cat:"eq_us_tot", sub:"US Total Market",    er:0.03, yld:1.3},
+  {t:"SCHB", n:"Schwab US Broad Market",               issuer:"Schwab",     desc:"2,500+ US stocks, all market caps, at rock-bottom cost. The most complete US equity exposure available.",         cat:"eq_us_tot",  sub:"US Total Market",    er:0.03, yld:1.3},
+  {t:"VTI",  n:"Vanguard Total Stock Market",           issuer:"Vanguard",   desc:"The entire US equity market in one fund — large, mid and small cap. True buy-and-hold foundation.",            cat:"eq_us_tot",  sub:"US Total Market",    er:0.03, yld:1.3},
+  {t:"ITOT", n:"iShares Core S&P Total US Stock Market",issuer:"BlackRock",  desc:"S&P composite total US market. Covers 99%+ of US equity market cap at near-zero fee.",                         cat:"eq_us_tot",  sub:"US Total Market",    er:0.03, yld:1.3},
+  {t:"SPTM", n:"SPDR Portfolio US Total Stock Market",  issuer:"State Street",desc:"Low-cost total US market index. Captures large, mid and small cap growth and value in one ticker.",            cat:"eq_us_tot",  sub:"US Total Market",    er:0.03, yld:1.3},
   // ── US LARGE CAP ──
-  {t:"SPLG", n:"SPDR Portfolio S&P 500",         cat:"eq_us_lc",  sub:"US Large Cap",       er:0.02, yld:1.3},
-  {t:"VOO",  n:"Vanguard S&P 500",               cat:"eq_us_lc",  sub:"US Large Cap",       er:0.03, yld:1.3},
-  {t:"IVV",  n:"iShares Core S&P 500",           cat:"eq_us_lc",  sub:"US Large Cap",       er:0.03, yld:1.3},
-  {t:"SPY",  n:"SPDR S&P 500",                   cat:"eq_us_lc",  sub:"US Large Cap",       er:0.09, yld:1.3},
+  {t:"SPLG", n:"SPDR Portfolio S&P 500",                issuer:"State Street",desc:"The cheapest S&P 500 ETF on the market at 0.02%. Identical exposure to SPY at one-fifth the cost.",            cat:"eq_us_lc",   sub:"US Large Cap",       er:0.02, yld:1.3},
+  {t:"VOO",  n:"Vanguard S&P 500",                      issuer:"Vanguard",   desc:"S&P 500 index — 500 largest US companies. Long-term core equity holding; consistently beats most active funds.", cat:"eq_us_lc",   sub:"US Large Cap",       er:0.03, yld:1.3},
+  {t:"IVV",  n:"iShares Core S&P 500",                  issuer:"BlackRock",  desc:"iShares flagship S&P 500 ETF. Extremely liquid, tight spreads, near-zero tracking error.",                       cat:"eq_us_lc",   sub:"US Large Cap",       er:0.03, yld:1.3},
+  {t:"SPY",  n:"SPDR S&P 500 ETF Trust",                issuer:"State Street",desc:"The original and most traded ETF. Benchmark for global equity markets; unmatched options liquidity.",            cat:"eq_us_lc",   sub:"US Large Cap",       er:0.09, yld:1.3},
   // ── US DIVIDEND ──
-  {t:"SCHD", n:"Schwab US Dividend Equity",      cat:"eq_us_div", sub:"US Dividend",        er:0.06, yld:3.5},
-  {t:"VYM",  n:"Vanguard High Dividend Yield",   cat:"eq_us_div", sub:"US Dividend",        er:0.06, yld:3.0},
-  {t:"DGRO", n:"iShares Core Dividend Growth",   cat:"eq_us_div", sub:"US Dividend",        er:0.08, yld:2.3},
-  {t:"HDV",  n:"iShares Core High Dividend",     cat:"eq_us_div", sub:"US Dividend",        er:0.08, yld:3.5},
-  {t:"DVY",  n:"iShares Select Dividend",        cat:"eq_us_div", sub:"US Dividend",        er:0.38, yld:4.2},
+  {t:"SCHD", n:"Schwab US Dividend Equity",             issuer:"Schwab",     desc:"Quality dividend screened for growth and sustainability. Outperformed S&P in multiple cycles. Investor favorite.", cat:"eq_us_div",  sub:"US Dividend",        er:0.06, yld:3.5},
+  {t:"VYM",  n:"Vanguard High Dividend Yield",           issuer:"Vanguard",   desc:"400+ high-yielding US stocks. Tilts toward value and defensives — financials, healthcare, consumer staples.",    cat:"eq_us_div",  sub:"US Dividend",        er:0.06, yld:3.0},
+  {t:"DGRO", n:"iShares Core Dividend Growth",           issuer:"BlackRock",  desc:"Focuses on dividend growth, not just yield. Companies with 5+ consecutive years of dividend increases.",          cat:"eq_us_div",  sub:"US Dividend",        er:0.08, yld:2.3},
+  {t:"HDV",  n:"iShares Core High Dividend",             issuer:"BlackRock",  desc:"75 high-yield US stocks screened for financial health. Energy and healthcare heavy; income with quality filter.",  cat:"eq_us_div",  sub:"US Dividend",        er:0.08, yld:3.5},
+  {t:"DVY",  n:"iShares Select Dividend",                issuer:"BlackRock",  desc:"100 highest-yielding US stocks with consistent payout history. Utility and financial sector concentration.",       cat:"eq_us_div",  sub:"US Dividend",        er:0.38, yld:4.2},
   // ── US VALUE ──
-  {t:"SCHV", n:"Schwab US Large-Cap Value",      cat:"eq_us_val", sub:"US Value",           er:0.04, yld:2.5},
-  {t:"VTV",  n:"Vanguard Value",                 cat:"eq_us_val", sub:"US Value",           er:0.04, yld:2.5},
-  {t:"IVE",  n:"iShares S&P 500 Value",          cat:"eq_us_val", sub:"US Value",           er:0.18, yld:2.3},
+  {t:"SCHV", n:"Schwab US Large-Cap Value",             issuer:"Schwab",     desc:"Deep value US large caps at minimum cost. Low P/E, P/B screened — financials, energy and industrials tilt.",      cat:"eq_us_val",  sub:"US Value",           er:0.04, yld:2.5},
+  {t:"VTV",  n:"Vanguard Value",                         issuer:"Vanguard",   desc:"S&P 500 value factor. Historically outperforms growth in rising rate and high inflation environments.",            cat:"eq_us_val",  sub:"US Value",           er:0.04, yld:2.5},
+  {t:"IVE",  n:"iShares S&P 500 Value",                  issuer:"BlackRock",  desc:"S&P 500 value tilt via price-to-book and earnings ratios. Classic defensive positioning against growth froth.",   cat:"eq_us_val",  sub:"US Value",           er:0.18, yld:2.3},
   // ── US GROWTH ──
-  {t:"SCHG", n:"Schwab US Large-Cap Growth",     cat:"eq_us_gro", sub:"US Growth",          er:0.04, yld:0.5},
-  {t:"VUG",  n:"Vanguard Growth",                cat:"eq_us_gro", sub:"US Growth",          er:0.04, yld:0.5},
-  {t:"IVW",  n:"iShares S&P 500 Growth",         cat:"eq_us_gro", sub:"US Growth",          er:0.18, yld:0.5},
+  {t:"SCHG", n:"Schwab US Large-Cap Growth",            issuer:"Schwab",     desc:"Large cap growth at 0.04%. Tech-heavy — top holdings include Apple, Microsoft, Nvidia, Amazon, Meta.",            cat:"eq_us_gro",  sub:"US Growth",          er:0.04, yld:0.5},
+  {t:"VUG",  n:"Vanguard Growth",                        issuer:"Vanguard",   desc:"Growth-oriented large caps. Mega-cap technology driven; powerful in bull markets, volatile in downturns.",         cat:"eq_us_gro",  sub:"US Growth",          er:0.04, yld:0.5},
+  {t:"IVW",  n:"iShares S&P 500 Growth",                 issuer:"BlackRock",  desc:"S&P 500 growth factor subset. Concentrated in technology and consumer discretionary mega caps.",                  cat:"eq_us_gro",  sub:"US Growth",          er:0.18, yld:0.5},
   // ── US SMALL CAP ──
-  {t:"SCHA", n:"Schwab US Small-Cap",            cat:"eq_us_sc",  sub:"US Small Cap",       er:0.04, yld:1.5},
-  {t:"VB",   n:"Vanguard Small-Cap",             cat:"eq_us_sc",  sub:"US Small Cap",       er:0.05, yld:1.5},
-  {t:"IJR",  n:"iShares Core S&P Small-Cap",     cat:"eq_us_sc",  sub:"US Small Cap",       er:0.06, yld:1.4},
-  {t:"IWM",  n:"iShares Russell 2000",           cat:"eq_us_sc",  sub:"US Small Cap",       er:0.19, yld:1.3},
+  {t:"SCHA", n:"Schwab US Small-Cap",                   issuer:"Schwab",     desc:"1,700+ small US companies at near-zero cost. Higher long-term return potential with higher volatility.",           cat:"eq_us_sc",   sub:"US Small Cap",       er:0.04, yld:1.5},
+  {t:"VB",   n:"Vanguard Small-Cap",                     issuer:"Vanguard",   desc:"Broad US small cap market. Outperforms large cap over full cycles; benefits from domestic economic growth.",       cat:"eq_us_sc",   sub:"US Small Cap",       er:0.05, yld:1.5},
+  {t:"IJR",  n:"iShares Core S&P Small-Cap",             issuer:"BlackRock",  desc:"S&P 600 small cap index — quality-screened small caps. Historically outperforms Russell 2000 on returns.",       cat:"eq_us_sc",   sub:"US Small Cap",       er:0.06, yld:1.4},
+  {t:"IWM",  n:"iShares Russell 2000",                   issuer:"BlackRock",  desc:"The benchmark small cap ETF. 2,000 small US companies; most active options market in small cap space.",           cat:"eq_us_sc",   sub:"US Small Cap",       er:0.19, yld:1.3},
   // ── US MID CAP ──
-  {t:"SCHM", n:"Schwab US Mid-Cap",              cat:"eq_us_mc",  sub:"US Mid Cap",         er:0.04, yld:1.4},
-  {t:"VO",   n:"Vanguard Mid-Cap",               cat:"eq_us_mc",  sub:"US Mid Cap",         er:0.04, yld:1.4},
-  {t:"IJH",  n:"iShares Core S&P Mid-Cap",       cat:"eq_us_mc",  sub:"US Mid Cap",         er:0.05, yld:1.3},
+  {t:"SCHM", n:"Schwab US Mid-Cap",                     issuer:"Schwab",     desc:"500+ mid-size US companies at rock-bottom fee. Sweet spot between large cap stability and small cap growth.",      cat:"eq_us_mc",   sub:"US Mid Cap",         er:0.04, yld:1.4},
+  {t:"VO",   n:"Vanguard Mid-Cap",                       issuer:"Vanguard",   desc:"Broad mid cap US equity. Companies large enough to be stable, small enough to still grow meaningfully.",           cat:"eq_us_mc",   sub:"US Mid Cap",         er:0.04, yld:1.4},
+  {t:"IJH",  n:"iShares Core S&P Mid-Cap",               issuer:"BlackRock",  desc:"S&P 400 mid cap index. Quality-screened; historically outperforms both large and small cap over long periods.",   cat:"eq_us_mc",   sub:"US Mid Cap",         er:0.05, yld:1.3},
   // ── SECTOR: TECHNOLOGY ──
-  {t:"FTEC", n:"Fidelity MSCI IT Sector",        cat:"sec_tech",  sub:"Technology",         er:0.08, yld:0.6},
-  {t:"VGT",  n:"Vanguard IT Sector",             cat:"sec_tech",  sub:"Technology",         er:0.10, yld:0.6},
-  {t:"XLK",  n:"SPDR Technology Select",         cat:"sec_tech",  sub:"Technology",         er:0.09, yld:0.7},
+  {t:"FTEC", n:"Fidelity MSCI Information Technology",  issuer:"Fidelity",   desc:"Full US tech sector at lowest cost. Covers software, hardware, semiconductors, cloud and IT services.",           cat:"sec_tech",   sub:"Technology",         er:0.08, yld:0.6},
+  {t:"VGT",  n:"Vanguard IT Sector",                     issuer:"Vanguard",   desc:"US tech sector — Apple, Microsoft, Nvidia lead at ~45% combined. Highest long-run return of any sector ETF.",    cat:"sec_tech",   sub:"Technology",         er:0.10, yld:0.6},
+  {t:"XLK",  n:"SPDR Technology Select Sector",          issuer:"State Street",desc:"S&P 500 technology stocks only. Ultra-liquid; benchmark for sector rotation strategies.",                        cat:"sec_tech",   sub:"Technology",         er:0.09, yld:0.7},
   // ── SECTOR: HEALTHCARE ──
-  {t:"FHLC", n:"Fidelity MSCI Healthcare",       cat:"sec_hlth",  sub:"Healthcare",         er:0.08, yld:1.5},
-  {t:"VHT",  n:"Vanguard Healthcare Sector",     cat:"sec_hlth",  sub:"Healthcare",         er:0.10, yld:1.5},
-  {t:"XLV",  n:"SPDR Healthcare Select",         cat:"sec_hlth",  sub:"Healthcare",         er:0.09, yld:1.6},
+  {t:"FHLC", n:"Fidelity MSCI Health Care",             issuer:"Fidelity",   desc:"Full healthcare sector at minimum cost. Pharmaceuticals, biotech, medical devices and managed care.",              cat:"sec_hlth",   sub:"Healthcare",         er:0.08, yld:1.5},
+  {t:"VHT",  n:"Vanguard Healthcare Sector",             issuer:"Vanguard",   desc:"Defensive growth sector. Healthcare tends to hold up in recessions; aging demographics are a structural tailwind.", cat:"sec_hlth",   sub:"Healthcare",         er:0.10, yld:1.5},
+  {t:"XLV",  n:"SPDR Healthcare Select Sector",          issuer:"State Street",desc:"S&P 500 healthcare stocks. JNJ, UnitedHealth, Abbvie dominate. Liquid benchmark for sector bets.",               cat:"sec_hlth",   sub:"Healthcare",         er:0.09, yld:1.6},
   // ── SECTOR: ENERGY ──
-  {t:"FENY", n:"Fidelity MSCI Energy",           cat:"sec_enrg",  sub:"Energy",             er:0.08, yld:3.5},
-  {t:"VDE",  n:"Vanguard Energy Sector",         cat:"sec_enrg",  sub:"Energy",             er:0.10, yld:3.5},
-  {t:"XLE",  n:"SPDR Energy Select",             cat:"sec_enrg",  sub:"Energy",             er:0.09, yld:3.4},
+  {t:"FENY", n:"Fidelity MSCI Energy Sector",           issuer:"Fidelity",   desc:"US energy sector at lowest cost — oil, gas, pipelines, refiners. Inflation hedge; benefits from USD weakness.",   cat:"sec_enrg",   sub:"Energy",             er:0.08, yld:3.5},
+  {t:"VDE",  n:"Vanguard Energy Sector",                 issuer:"Vanguard",   desc:"US energy stocks. Exxon, Chevron, ConocoPhillips. High dividend yield; strong in inflationary commodity cycles.", cat:"sec_enrg",   sub:"Energy",             er:0.10, yld:3.5},
+  {t:"XLE",  n:"SPDR Energy Select Sector",              issuer:"State Street",desc:"S&P 500 energy companies. Most liquid energy ETF; dominant for tactical commodity and inflation positioning.",    cat:"sec_enrg",   sub:"Energy",             er:0.09, yld:3.4},
   // ── SECTOR: FINANCIALS ──
-  {t:"FNCL", n:"Fidelity MSCI Financials",       cat:"sec_fin",   sub:"Financials",         er:0.08, yld:2.0},
-  {t:"VFH",  n:"Vanguard Financials Sector",     cat:"sec_fin",   sub:"Financials",         er:0.10, yld:2.0},
-  {t:"XLF",  n:"SPDR Financials Select",         cat:"sec_fin",   sub:"Financials",         er:0.09, yld:1.9},
+  {t:"FNCL", n:"Fidelity MSCI Financials Sector",       issuer:"Fidelity",   desc:"US financials at lowest cost — banks, insurance, asset managers, brokers. Benefits from rising rate environment.", cat:"sec_fin",    sub:"Financials",         er:0.08, yld:2.0},
+  {t:"VFH",  n:"Vanguard Financials Sector",             issuer:"Vanguard",   desc:"Banks and financial services. JPMorgan, Berkshire, Bank of America. Rate-sensitive; strong in expansion phases.",  cat:"sec_fin",    sub:"Financials",         er:0.10, yld:2.0},
+  {t:"XLF",  n:"SPDR Financials Select Sector",          issuer:"State Street",desc:"S&P 500 financial stocks. Most liquid financial sector ETF; benchmark for rate and credit cycle plays.",          cat:"sec_fin",    sub:"Financials",         er:0.09, yld:1.9},
   // ── SECTOR: MATERIALS ──
-  {t:"FMAT", n:"Fidelity MSCI Materials",        cat:"sec_mat",   sub:"Materials",          er:0.08, yld:1.8},
-  {t:"VAW",  n:"Vanguard Materials Sector",      cat:"sec_mat",   sub:"Materials",          er:0.10, yld:1.8},
-  {t:"XLB",  n:"SPDR Materials Select",          cat:"sec_mat",   sub:"Materials",          er:0.09, yld:1.7},
+  {t:"FMAT", n:"Fidelity MSCI Materials Sector",        issuer:"Fidelity",   desc:"US materials sector at minimum cost — chemicals, metals, mining, paper. Classic commodity cycle play.",            cat:"sec_mat",    sub:"Materials",          er:0.08, yld:1.8},
+  {t:"VAW",  n:"Vanguard Materials Sector",              issuer:"Vanguard",   desc:"US materials stocks. Linde, Sherwin-Williams, Air Products. Inflation beneficiary; tied to industrial cycles.",    cat:"sec_mat",    sub:"Materials",          er:0.10, yld:1.8},
+  {t:"XLB",  n:"SPDR Materials Select Sector",           issuer:"State Street",desc:"S&P 500 materials companies. Liquid benchmark for commodity supercycle and USD weakness positioning.",            cat:"sec_mat",    sub:"Materials",          er:0.09, yld:1.7},
   // ── SECTOR: UTILITIES ──
-  {t:"FUTY", n:"Fidelity MSCI Utilities",        cat:"sec_util",  sub:"Utilities",          er:0.08, yld:3.2},
-  {t:"VPU",  n:"Vanguard Utilities Sector",      cat:"sec_util",  sub:"Utilities",          er:0.10, yld:3.2},
-  {t:"XLU",  n:"SPDR Utilities Select",          cat:"sec_util",  sub:"Utilities",          er:0.09, yld:3.1},
+  {t:"FUTY", n:"Fidelity MSCI Utilities Sector",        issuer:"Fidelity",   desc:"US utilities at lowest cost. Electric, gas and water companies. Bond-like income; defensive in downturns.",        cat:"sec_util",   sub:"Utilities",          er:0.08, yld:3.2},
+  {t:"VPU",  n:"Vanguard Utilities Sector",              issuer:"Vanguard",   desc:"US utility companies. NextEra, Southern, Duke. Rising AI power demand is a new structural growth driver.",         cat:"sec_util",   sub:"Utilities",          er:0.10, yld:3.2},
+  {t:"XLU",  n:"SPDR Utilities Select Sector",           issuer:"State Street",desc:"S&P 500 utility stocks. Defensive income; performs well when rates fall or economic uncertainty rises.",           cat:"sec_util",   sub:"Utilities",          er:0.09, yld:3.1},
   // ── SECTOR: CONSUMER DISC ──
-  {t:"FDIS", n:"Fidelity MSCI Consumer Disc",    cat:"sec_cd",    sub:"Consumer Disc.",     er:0.08, yld:0.8},
-  {t:"VCR",  n:"Vanguard Consumer Disc.",        cat:"sec_cd",    sub:"Consumer Disc.",     er:0.10, yld:0.8},
-  {t:"XLY",  n:"SPDR Consumer Disc. Select",     cat:"sec_cd",    sub:"Consumer Disc.",     er:0.09, yld:0.8},
+  {t:"FDIS", n:"Fidelity MSCI Consumer Discretionary",  issuer:"Fidelity",   desc:"US consumer discretionary at lowest cost. Amazon, Tesla, Home Depot. Strong in consumer-driven bull markets.",    cat:"sec_cd",     sub:"Consumer Disc.",     er:0.08, yld:0.8},
+  {t:"VCR",  n:"Vanguard Consumer Discretionary",        issuer:"Vanguard",   desc:"Retail, auto, leisure and media companies. Cyclical — outperforms in strong economic expansion phases.",           cat:"sec_cd",     sub:"Consumer Disc.",     er:0.10, yld:0.8},
+  {t:"XLY",  n:"SPDR Consumer Discretionary Select",     issuer:"State Street",desc:"S&P 500 consumer discretionary. Amazon and Tesla alone are ~35% of the ETF. High concentration risk/reward.",   cat:"sec_cd",     sub:"Consumer Disc.",     er:0.09, yld:0.8},
   // ── SECTOR: CONSUMER STAPLES ──
-  {t:"FSTA", n:"Fidelity MSCI Consumer Staples", cat:"sec_cs",    sub:"Consumer Staples",   er:0.08, yld:2.6},
-  {t:"VDC",  n:"Vanguard Consumer Staples",      cat:"sec_cs",    sub:"Consumer Staples",   er:0.10, yld:2.6},
-  {t:"XLP",  n:"SPDR Consumer Staples Select",   cat:"sec_cs",    sub:"Consumer Staples",   er:0.09, yld:2.5},
+  {t:"FSTA", n:"Fidelity MSCI Consumer Staples",        issuer:"Fidelity",   desc:"US consumer staples at minimum cost. Food, beverage, household products. Defensive; recession-resistant revenue.", cat:"sec_cs",     sub:"Consumer Staples",   er:0.08, yld:2.6},
+  {t:"VDC",  n:"Vanguard Consumer Staples Sector",       issuer:"Vanguard",   desc:"Procter & Gamble, Walmart, Coca-Cola, Costco. Boring but reliable; outperforms in downturns and bear markets.",    cat:"sec_cs",     sub:"Consumer Staples",   er:0.10, yld:2.6},
+  {t:"XLP",  n:"SPDR Consumer Staples Select Sector",    issuer:"State Street",desc:"S&P 500 consumer staples stocks. Most liquid staples ETF; classic defensive rotation benchmark.",                  cat:"sec_cs",     sub:"Consumer Staples",   er:0.09, yld:2.5},
   // ── SECTOR: INDUSTRIALS ──
-  {t:"FIDU", n:"Fidelity MSCI Industrials",      cat:"sec_ind",   sub:"Industrials",        er:0.08, yld:1.5},
-  {t:"VIS",  n:"Vanguard Industrials Sector",    cat:"sec_ind",   sub:"Industrials",        er:0.10, yld:1.5},
-  {t:"XLI",  n:"SPDR Industrials Select",        cat:"sec_ind",   sub:"Industrials",        er:0.09, yld:1.4},
+  {t:"FIDU", n:"Fidelity MSCI Industrials Sector",      issuer:"Fidelity",   desc:"US industrials at lowest cost — aerospace, defense, machinery, transportation. Infrastructure spending beneficiary.", cat:"sec_ind",   sub:"Industrials",        er:0.08, yld:1.5},
+  {t:"VIS",  n:"Vanguard Industrials Sector",            issuer:"Vanguard",   desc:"Caterpillar, Honeywell, GE Aerospace, RTX. Cyclical growth; benefits from reshoring and defense spending trends.",  cat:"sec_ind",   sub:"Industrials",        er:0.10, yld:1.5},
+  {t:"XLI",  n:"SPDR Industrials Select Sector",         issuer:"State Street",desc:"S&P 500 industrial companies. Diversified across sub-sectors; benchmark for capex and economic cycle rotation.",   cat:"sec_ind",   sub:"Industrials",        er:0.09, yld:1.4},
   // ── REITs ──
-  {t:"SCHH", n:"Schwab US REIT",                 cat:"real_reit", sub:"US REITs",           er:0.07, yld:3.8},
-  {t:"XLRE", n:"SPDR Real Estate Select",        cat:"real_reit", sub:"US REITs",           er:0.09, yld:3.5},
-  {t:"VNQ",  n:"Vanguard Real Estate",           cat:"real_reit", sub:"US REITs",           er:0.12, yld:3.8},
-  {t:"IYR",  n:"iShares US Real Estate",         cat:"real_reit", sub:"US REITs",           er:0.39, yld:3.6},
+  {t:"SCHH", n:"Schwab US REIT",                        issuer:"Schwab",     desc:"Lowest-cost US REIT ETF. 100+ publicly traded real estate investment trusts across property types.",                cat:"real_reit",  sub:"US REITs",           er:0.07, yld:3.8},
+  {t:"XLRE", n:"SPDR Real Estate Select Sector",         issuer:"State Street",desc:"S&P 500 real estate companies. Data centers and cell towers are now largest holdings — modern REIT portfolio.",    cat:"real_reit",  sub:"US REITs",           er:0.09, yld:3.5},
+  {t:"VNQ",  n:"Vanguard Real Estate",                   issuer:"Vanguard",   desc:"Broad US REIT market. 150+ properties — office, retail, residential, industrial. Inflation hedge with income.",     cat:"real_reit",  sub:"US REITs",           er:0.12, yld:3.8},
+  {t:"IYR",  n:"iShares US Real Estate",                 issuer:"BlackRock",  desc:"US real estate ETF with most liquid options market. Tactical tool for real estate sector bets.",                    cat:"real_reit",  sub:"US REITs",           er:0.39, yld:3.6},
   // ── GOLD ──
-  {t:"GLDM", n:"SPDR Gold MiniShares",           cat:"real_gold", sub:"Gold",               er:0.10, yld:0.0},
-  {t:"IAU",  n:"iShares Gold Trust",             cat:"real_gold", sub:"Gold",               er:0.25, yld:0.0},
-  {t:"GLD",  n:"SPDR Gold Shares",               cat:"real_gold", sub:"Gold",               er:0.40, yld:0.0},
-  {t:"SGOL", n:"Aberdeen Physical Gold",         cat:"real_gold", sub:"Gold",               er:0.17, yld:0.0},
+  {t:"GLDM", n:"SPDR Gold MiniShares",                  issuer:"State Street",desc:"Physical gold at lowest cost. Each share backed by actual gold bars stored in London vaults. Best ER in gold ETFs.", cat:"real_gold",  sub:"Gold",               er:0.10, yld:0.0},
+  {t:"IAU",  n:"iShares Gold Trust",                     issuer:"BlackRock",  desc:"Physical gold trust. Lower cost than GLD; designed for long-term gold holding rather than trading.",                 cat:"real_gold",  sub:"Gold",               er:0.25, yld:0.0},
+  {t:"GLD",  n:"SPDR Gold Shares",                       issuer:"State Street",desc:"The original and most liquid gold ETF. Preferred for active traders and institutions needing deep liquidity.",       cat:"real_gold",  sub:"Gold",               er:0.40, yld:0.0},
+  {t:"SGOL", n:"Aberdeen Physical Gold Shares",          issuer:"Aberdeen",   desc:"Physical gold stored in Swiss vaults. Low cost alternative backed by Swiss-custodied gold bars.",                    cat:"real_gold",  sub:"Gold",               er:0.17, yld:0.0},
   // ── BROAD COMMODITIES ──
-  {t:"PDBC", n:"Invesco Optimum Yield Comm.",    cat:"real_comm", sub:"Broad Commodities",  er:0.59, yld:0.0},
-  {t:"DBC",  n:"Invesco DB Commodity Index",     cat:"real_comm", sub:"Broad Commodities",  er:0.85, yld:0.0},
-  {t:"DJP",  n:"iPath Bloomberg Comm. TR",       cat:"real_comm", sub:"Broad Commodities",  er:0.70, yld:0.0},
+  {t:"PDBC", n:"Invesco Optimum Yield Diversified Commodity",issuer:"Invesco",desc:"Diversified commodity futures — energy, metals, agriculture. No K-1 tax form; commodity cycle inflation hedge.",   cat:"real_comm",  sub:"Broad Commodities",  er:0.59, yld:0.0},
+  {t:"DBC",  n:"Invesco DB Commodity Index Tracking Fund",issuer:"Invesco",   desc:"14 commodity futures across energy, metals and agriculture. Rules-based roll strategy minimizes contango drag.",   cat:"real_comm",  sub:"Broad Commodities",  er:0.85, yld:0.0},
+  {t:"DJP",  n:"iPath Bloomberg Commodity Total Return",  issuer:"Barclays",  desc:"Broad commodity index note (ETN structure). Energy, metals and agriculture; highest diversification in class.",    cat:"real_comm",  sub:"Broad Commodities",  er:0.70, yld:0.0},
   // ── INFRASTRUCTURE ──
-  {t:"IFRA", n:"iShares US Infrastructure",      cat:"real_infra",sub:"Infrastructure",     er:0.30, yld:2.5},
-  {t:"IGF",  n:"iShares Global Infrastructure", cat:"real_infra",sub:"Infrastructure",     er:0.43, yld:2.8},
-  {t:"PAVE", n:"Global X US Infrastructure Dev.",cat:"real_infra",sub:"Infrastructure",     er:0.47, yld:0.8},
+  {t:"IFRA", n:"iShares US Infrastructure",              issuer:"BlackRock",  desc:"US infrastructure companies — roads, utilities, water, airports. Benefits from federal infrastructure spending.",   cat:"real_infra", sub:"Infrastructure",     er:0.30, yld:2.5},
+  {t:"IGF",  n:"iShares Global Infrastructure",          issuer:"BlackRock",  desc:"Global infrastructure across utilities, transport and energy pipelines. Inflation-linked revenues, stable income.", cat:"real_infra", sub:"Infrastructure",     er:0.43, yld:2.8},
+  {t:"PAVE", n:"Global X US Infrastructure Development", issuer:"Global X",   desc:"US infrastructure development beneficiaries — materials, construction, engineering, heavy equipment.",              cat:"real_infra", sub:"Infrastructure",     er:0.47, yld:0.8},
   // ── PREFERRED STOCK ──
-  {t:"PFFD", n:"Global X US Preferred",         cat:"real_pref", sub:"Preferred Stock",    er:0.23, yld:6.2},
-  {t:"PFF",  n:"iShares Preferred & Income",    cat:"real_pref", sub:"Preferred Stock",    er:0.46, yld:6.0},
+  {t:"PFFD", n:"Global X US Preferred ETF",              issuer:"Global X",   desc:"300+ US preferred shares at low cost. High fixed income with equity upside potential. Bank-heavy issuance.",        cat:"real_pref",  sub:"Preferred Stock",    er:0.23, yld:6.2},
+  {t:"PFF",  n:"iShares Preferred & Income Securities",  issuer:"BlackRock",  desc:"The largest preferred stock ETF. 400+ hybrid securities combining bond income with equity exposure.",              cat:"real_pref",  sub:"Preferred Stock",    er:0.46, yld:6.0},
   // ── INTL DEVELOPED (BROAD) ──
-  {t:"SCHF", n:"Schwab Intl Equity",            cat:"eq_intl_dev",sub:"Intl Developed",    er:0.06, yld:3.2},
-  {t:"VEA",  n:"Vanguard FTSE Dev. Markets",    cat:"eq_intl_dev",sub:"Intl Developed",    er:0.06, yld:3.2},
-  {t:"IEFA", n:"iShares Core MSCI EAFE",        cat:"eq_intl_dev",sub:"Intl Developed",    er:0.07, yld:3.1},
-  {t:"EFA",  n:"iShares MSCI EAFE",             cat:"eq_intl_dev",sub:"Intl Developed",    er:0.32, yld:3.0},
+  {t:"SCHF", n:"Schwab International Equity",            issuer:"Schwab",     desc:"Developed market ex-US equities at rock-bottom cost. Europe, Japan, Australia and Canada in one fund.",             cat:"eq_intl_dev", sub:"Intl Developed",    er:0.06, yld:3.2},
+  {t:"VEA",  n:"Vanguard FTSE Developed Markets",        issuer:"Vanguard",   desc:"4,000+ stocks in 24 developed countries. Unhedged USD exposure — benefits when dollar weakens.",                   cat:"eq_intl_dev", sub:"Intl Developed",    er:0.06, yld:3.2},
+  {t:"IEFA", n:"iShares Core MSCI EAFE",                 issuer:"BlackRock",  desc:"Europe, Australasia and Far East equities. Most liquid developed market ex-US ETF; benchmark for intl allocation.", cat:"eq_intl_dev", sub:"Intl Developed",    er:0.07, yld:3.1},
+  {t:"EFA",  n:"iShares MSCI EAFE",                      issuer:"BlackRock",  desc:"The original international ETF. 900+ large and mid cap stocks across 21 developed countries outside North America.", cat:"eq_intl_dev", sub:"Intl Developed",    er:0.32, yld:3.0},
   // ── EUROPE ──
-  {t:"VGK",  n:"Vanguard FTSE Europe",          cat:"eq_europe",  sub:"Europe",            er:0.09, yld:3.1},
-  {t:"EZU",  n:"iShares MSCI Eurozone",         cat:"eq_europe",  sub:"Europe",            er:0.51, yld:3.0},
-  {t:"FEZ",  n:"SPDR Euro Stoxx 50",            cat:"eq_europe",  sub:"Europe",            er:0.29, yld:3.0},
+  {t:"VGK",  n:"Vanguard FTSE Europe",                   issuer:"Vanguard",   desc:"Lowest-cost Europe ETF. UK, France, Germany, Switzerland and Sweden dominate. Trades at deep discount to US.",     cat:"eq_europe",  sub:"Europe",             er:0.09, yld:3.1},
+  {t:"EZU",  n:"iShares MSCI Eurozone",                  issuer:"BlackRock",  desc:"Eurozone-only equities in EUR currency. Pure play on ECB policy and European economic recovery cycles.",           cat:"eq_europe",  sub:"Europe",             er:0.51, yld:3.0},
+  {t:"FEZ",  n:"SPDR EURO STOXX 50",                     issuer:"State Street",desc:"50 largest eurozone blue-chips. LVMH, SAP, ASML, Siemens, Total. Liquid benchmark for European equity exposure.", cat:"eq_europe",  sub:"Europe",             er:0.29, yld:3.0},
   // ── SWITZERLAND ──
-  {t:"EWL",  n:"iShares MSCI Switzerland",      cat:"eq_swiss",   sub:"Switzerland (CHF)", er:0.50, yld:2.8},
+  {t:"EWL",  n:"iShares MSCI Switzerland Capped",        issuer:"BlackRock",  desc:"Swiss large caps in CHF — Nestlé, Roche, Novartis, UBS. Defensive quality + CHF currency appreciation potential.", cat:"eq_swiss",   sub:"Switzerland (CHF)",  er:0.50, yld:2.8},
   // ── JAPAN ──
-  {t:"EWJ",  n:"iShares MSCI Japan",            cat:"eq_japan",   sub:"Japan (JPY)",       er:0.50, yld:1.8},
-  {t:"DXJ",  n:"WisdomTree Japan Hedged Eq.",   cat:"eq_japan",   sub:"Japan Hdg.",        er:0.48, yld:2.0},
+  {t:"EWJ",  n:"iShares MSCI Japan",                     issuer:"BlackRock",  desc:"Japanese equities in JPY. Toyota, Sony, Keyence. Corporate governance reforms driving return-on-equity improvement.", cat:"eq_japan",   sub:"Japan (JPY)",        er:0.50, yld:1.8},
+  {t:"DXJ",  n:"WisdomTree Japan Hedged Equity",         issuer:"WisdomTree", desc:"Japanese equities with USD/JPY hedge removed. Pure Japanese equity beta without currency drag from yen exposure.",   cat:"eq_japan",   sub:"Japan (hedged)",     er:0.48, yld:2.0},
   // ── UK ──
-  {t:"EWU",  n:"iShares MSCI United Kingdom",   cat:"eq_uk",      sub:"United Kingdom",    er:0.50, yld:4.0},
+  {t:"EWU",  n:"iShares MSCI United Kingdom",            issuer:"BlackRock",  desc:"UK large caps — AstraZeneca, Shell, HSBC, Unilever. High dividend yield; trades at significant valuation discount.", cat:"eq_uk",      sub:"United Kingdom",     er:0.50, yld:4.0},
   // ── EMERGING MARKETS (BROAD) ──
-  {t:"SCHE", n:"Schwab Emerging Markets",       cat:"eq_em",      sub:"Emerging Markets",  er:0.11, yld:2.5},
-  {t:"VWO",  n:"Vanguard FTSE Emerging Mkts",  cat:"eq_em",      sub:"Emerging Markets",  er:0.08, yld:2.8},
-  {t:"IEMG", n:"iShares Core MSCI EM",         cat:"eq_em",      sub:"Emerging Markets",  er:0.09, yld:2.6},
-  {t:"EEM",  n:"iShares MSCI Emerging Markets", cat:"eq_em",      sub:"Emerging Markets",  er:0.68, yld:2.4},
+  {t:"SCHE", n:"Schwab Emerging Markets Equity",         issuer:"Schwab",     desc:"EM equities at lowest cost — China, India, Taiwan, South Korea, Brazil. Cheapest broad EM ETF available.",          cat:"eq_em",      sub:"Emerging Markets",   er:0.11, yld:2.5},
+  {t:"VWO",  n:"Vanguard FTSE Emerging Markets",         issuer:"Vanguard",   desc:"5,000+ EM stocks. Excludes South Korea vs MSCI peers. Lower ER than iShares with comparable diversification.",      cat:"eq_em",      sub:"Emerging Markets",   er:0.08, yld:2.8},
+  {t:"IEMG", n:"iShares Core MSCI Emerging Markets",     issuer:"BlackRock",  desc:"2,500+ EM companies across 24 countries. Broader and cheaper than the original EEM; institutional benchmark.",      cat:"eq_em",      sub:"Emerging Markets",   er:0.09, yld:2.6},
+  {t:"EEM",  n:"iShares MSCI Emerging Markets",          issuer:"BlackRock",  desc:"The original EM ETF; most liquid with active options. Dominated by Chinese tech, Taiwan Semi and Samsung.",         cat:"eq_em",      sub:"Emerging Markets",   er:0.68, yld:2.4},
   // ── CHINA ──
-  {t:"MCHI", n:"iShares MSCI China",           cat:"eq_china",   sub:"China",             er:0.59, yld:1.5},
-  {t:"KWEB", n:"KraneShares CSI China Internet",cat:"eq_china",   sub:"China Tech",        er:0.69, yld:0.5},
-  {t:"CQQQ", n:"Invesco China Tech",           cat:"eq_china",   sub:"China Tech",        er:0.65, yld:0.5},
+  {t:"MCHI", n:"iShares MSCI China",                     issuer:"BlackRock",  desc:"Broad China equity — A-shares, H-shares, ADRs. Tencent, Alibaba, Meituan. High growth potential, policy risk.",     cat:"eq_china",   sub:"China",              er:0.59, yld:1.5},
+  {t:"KWEB", n:"KraneShares CSI China Internet",         issuer:"KraneShares",desc:"Chinese internet giants — Alibaba, Tencent, JD, Baidu, Meituan. High volatility; regulatory risk priced in.",       cat:"eq_china",   sub:"China Tech",         er:0.69, yld:0.5},
+  {t:"CQQQ", n:"Invesco China Technology ETF",           issuer:"Invesco",    desc:"China technology sector. Software, hardware, AI, e-commerce. High growth exposure to China's tech transition.",      cat:"eq_china",   sub:"China Tech",         er:0.65, yld:0.5},
   // ── INDIA ──
-  {t:"INDA", n:"iShares MSCI India",           cat:"eq_india",   sub:"India",             er:0.65, yld:0.5},
-  {t:"SMIN", n:"iShares MSCI India Small Cap", cat:"eq_india",   sub:"India Small Cap",   er:0.74, yld:0.3},
+  {t:"INDA", n:"iShares MSCI India",                     issuer:"BlackRock",  desc:"Indian large and mid cap equities. Fastest-growing major economy; demographics and digitization as tailwinds.",       cat:"eq_india",   sub:"India",              er:0.65, yld:0.5},
+  {t:"SMIN", n:"iShares MSCI India Small-Cap",           issuer:"BlackRock",  desc:"Indian small cap companies. Higher domestic exposure than large caps; captures India's internal consumption growth.",  cat:"eq_india",   sub:"India Small Cap",    er:0.74, yld:0.3},
   // ── LATIN AMERICA ──
-  {t:"ILF",  n:"iShares Latin America 40",     cat:"eq_latam",   sub:"Latin America",     er:0.48, yld:4.0},
-  {t:"FLN",  n:"First Trust Latin America",    cat:"eq_latam",   sub:"Latin America",     er:0.80, yld:3.5},
+  {t:"ILF",  n:"iShares Latin America 40",               issuer:"BlackRock",  desc:"40 largest LatAm companies — Brazil, Mexico, Chile, Colombia, Peru. Commodity-linked with high dividend yields.",    cat:"eq_latam",   sub:"Latin America",      er:0.48, yld:4.0},
+  {t:"FLN",  n:"First Trust Latin America AlphaDEX",     issuer:"First Trust",desc:"Factor-selected LatAm stocks using growth and value screens. More diversified than market-cap-weighted peers.",       cat:"eq_latam",   sub:"Latin America",      er:0.80, yld:3.5},
   // ── INTL SMALL CAP ──
-  {t:"VSS",  n:"Vanguard FTSE All-Wld ex-US SC",cat:"eq_intl_sc", sub:"Intl Small Cap",   er:0.07, yld:2.5},
-  {t:"SCZ",  n:"iShares MSCI EAFE Small-Cap",  cat:"eq_intl_sc", sub:"Intl Small Cap",   er:0.40, yld:2.3},
+  {t:"VSS",  n:"Vanguard FTSE All-World ex-US Small Cap",issuer:"Vanguard",   desc:"3,500+ small companies outside the US. Lowest-cost intl small cap ETF; true global diversification beyond mega caps.", cat:"eq_intl_sc", sub:"Intl Small Cap",    er:0.07, yld:2.5},
+  {t:"SCZ",  n:"iShares MSCI EAFE Small-Cap",            issuer:"BlackRock",  desc:"Developed market small caps in Europe, Japan and Pacific. Less correlated to US; captures local economy growth.",     cat:"eq_intl_sc", sub:"Intl Small Cap",    er:0.40, yld:2.3},
 ];
 
 // Build lookup map
@@ -647,6 +694,7 @@ function btCalc(a){
 }
 
 // ─── BUILD & RENDER ───────────────────────────────────────────────────────────
+function confirmAndBuild(){buildPortfolio();}
 function buildPortfolio(){
   alloc=buildAllocFn(answers);
   const et=holdings.reduce((s,h)=>s+(parseFloat(h.value)||0),0);
@@ -697,11 +745,13 @@ function renderResults(a,total,dep,et){
     const info=ETF_MAP[t]; const col=CAT_COLORS[info?.cat]||'#888';
     const sub=CAT_NAMES[info?.cat]||info?.sub||'';
     return `<div class="pos-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
         <span class="mono" style="font-size:16px;font-weight:700;color:#D4A853">${t}</span>
         <span class="mono" style="font-size:15px;font-weight:700">${wt}%</span>
       </div>
-      <div style="font-size:12px;color:#64748B;margin-bottom:10px">${info?.n||'—'}</div>
+      <div style="font-size:13px;font-weight:600;color:#E2E8F0;margin-bottom:2px">${info?.n||'—'}</div>
+      <div style="font-size:11px;color:#D4A853;margin-bottom:10px;font-family:'DM Mono',monospace;letter-spacing:1px">${info?.issuer||''}</div>
+      <div style="font-size:12px;color:#64748B;line-height:1.6;margin-bottom:12px;border-left:2px solid rgba(212,168,83,0.2);padding-left:10px">${info?.desc||''}</div>
       <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px"><span style="color:#4A5568">Amount</span><span class="mono">${fmt(total*wt/100)}</span></div>
       <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:8px"><span style="color:#4A5568">Yield / Exp. Ratio</span><span class="mono"><span style="color:#6BAF8E">${(info?.yld||0).toFixed(1)}%</span> / <span style="color:#4A5568">${(info?.er||0).toFixed(2)}%</span></span></div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
